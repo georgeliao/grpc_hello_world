@@ -9,6 +9,10 @@ edition = "2024"
 name = "hello_world_server"
 path = "src/server.rs"
 
+[[bin]]
+name = "hello_world_client"
+path = "src/client.rs"
+
 [dependencies]
 tokio = { version = "1.46.1", features = ["full"] }
 tonic = "0.13.1"
