@@ -1,0 +1,18 @@
+[package]
+name = "gprc_hello_world"
+version = "0.1.0"
+edition = "2024"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "hello_world_server"
+path = "src/server.rs"
+
+[dependencies]
+tokio = { version = "1.46.1", features = ["full"] }
+tonic = "0.13.1"
+prost = "0.14.1"
+
+[build-dependencies]
+tonic-build = "0.13.1"
