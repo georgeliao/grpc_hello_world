@@ -3,7 +3,6 @@ name = "grpc_hello_world"
 version = "0.1.0"
 edition = "2024"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
 name = "helloworld-server"
@@ -14,9 +13,12 @@ name = "helloworld-client"
 path = "src/client.rs"
 
 [dependencies]
-tonic = "0.7"
-prost = "0.10"
-tokio = { version = "1.46.1", features = ["macros", "rt-multi-thread"] }
+tonic = { version = "0.14.1", features = ["transport", "tls-webpki-roots"] }
+tonic-prost = "0.14.1"                                                       # <-- add this
+prost = "0.14"
+prost-types = "0.14"
+tokio = { version = "1.47.1", features = ["macros", "rt-multi-thread"] }
+rcgen = { version = "0.14.3", features = ["pem", "crypto"] }
 
 [build-dependencies]
-tonic-build = "0.7"
+tonic-prost-build = "0.14.1"
