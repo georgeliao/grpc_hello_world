@@ -1,5 +1,6 @@
 use hello::HelloRequest;
 use hello::greeter_client::GreeterClient;
+use std::path::Path;
 use tokio::fs;
 use tonic::Request;
 use tonic::transport::{Certificate, Channel, ClientTlsConfig, Endpoint, Identity};
@@ -10,11 +11,12 @@ pub mod hello {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let tls_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("tls");
     // Trust anchor for the **server** (CA that signed localhost.pem).
-    let server_ca_pem = fs::read("../../tls/root_cert.pem").await?; // replace if needed
+    let server_ca_pem = fs::read(tls_dir.join("root_cert.pem")).await?; // replace if needed
     // Client identity (cert+key) signed by the CA the server trusts.
-    let client_cert_pem = fs::read("../../tls/client_cert.pem").await?;
-    let client_key_pem = fs::read("../../tls/client_key.pem").await?;
+    let client_cert_pem = fs::read(tls_dir.join("client_cert.pem")).await?;
+    let client_key_pem = fs::read(tls_dir.join("client_key.pem")).await?;
 
     let tls = ClientTlsConfig::new()
         .ca_certificate(Certificate::from_pem(server_ca_pem))
