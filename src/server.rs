@@ -1,7 +1,8 @@
 use hello::greeter_server::{Greeter, GreeterServer};
 use hello::{HelloReply, HelloRequest};
+use std::path::Path;
 use tokio::fs;
-use tonic::transport::{Certificate, Identity, ServerTlsConfig};
+use tonic::transport::{Identity, ServerTlsConfig};
 use tonic::{Request, Response, Status, transport::Server};
 
 pub mod hello {
@@ -28,9 +29,10 @@ impl Greeter for MyGreeter {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let tls_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("tls");
     // --- required for TLS ---
-    let server_cert = fs::read("../..//tls/server.pem").await?;
-    let server_key = fs::read("../../tls/server_key.pem").await?;
+    let server_cert = fs::read(tls_dir.join("server.pem")).await?;
+    let server_key = fs::read(tls_dir.join("server_key.pem")).await?;
     let identity = Identity::from_pem(server_cert, server_key);
 
     let addr = "[::1]:50051".parse()?;
