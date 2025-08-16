@@ -1,8 +1,30 @@
-# grpc_hello_world
+# gRPC hello world with TLS
 
-On linux, we need to globally install protobuf-compiler unlike C++
+A minimal example demonstrating a gRPC server–client connection using TLS authentication.
+
+## 🛠️ Build Instructions
+
+### Prerequisites
+
+- Rust toolchain (install via [rustup.rs](https://rustup.rs))
+- Internet access (to fetch metadata)
+
+### Clone the project
+
+```bash
+git clone https://github.com/georgeliao/grpc_hello_world.git
+cd grpc_hello_world
 ```
-sudo apt update
-sudo apt install protobuf-compiler
 
+### Build
+
+```bash
+cargo build --release
+```
+
+### Run
+
+```bash
+cargo run --bin helloworld-server
+cargo run --bin helloworld-client
 ```
